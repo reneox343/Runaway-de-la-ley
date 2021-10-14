@@ -1,4 +1,6 @@
 using System.Collections;
+using UnityEditor;
+using UnityEditor.Animations;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +8,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     //character srpite renderer
-    SpriteRenderer characerSprite;
+    Animator characterAnimator;
     // Start is called before the first frame update
     [HideInInspector]
     public int gunType;
@@ -15,9 +17,9 @@ public class Gun : MonoBehaviour
     //Character children
     private GameObject Revolver;
     private GameObject Revolvers;
-    //character gun sprites
-    private Sprite revolverSprite;
-    private Sprite revolversSprite;
+    //controller (animation) gun sprites
+    private RuntimeAnimatorController revolverAnimatorController;
+    private RuntimeAnimatorController revolversAnimatorController;
     //revolver config
     public float revolverShootDelay;
     //revolvers config
@@ -30,22 +32,22 @@ public class Gun : MonoBehaviour
     private float generalAmmo = 0;
     void Start()
     {
-        characerSprite = gameObject.GetComponent<SpriteRenderer>();
+        characterAnimator = gameObject.GetComponent<Animator>();
 
         //bullets
-        revolverBullet = (GameObject) Resources.Load("Prefaps/Bullets/RevolverBullet", typeof(GameObject));
+        revolverBullet = Resources.Load("Prefaps/Bullets/RevolverBullet") as GameObject;
 
         //gunsprites
-        revolverSprite = (Sprite)Resources.Load("Sprites/Character/CharacterRevolver/CharacterRevolver", typeof(Sprite));
-        revolversSprite = (Sprite)Resources.Load("Sprites/Character/CharacterRevolvers/CharacterRevolvers", typeof(Sprite));
-
+        revolverAnimatorController = Resources.Load("Animations/Character/CharacterRevolver/CharacterRevolver") as RuntimeAnimatorController;
+        revolversAnimatorController = Resources.Load("Animations/Character/CharacterRevolvers/CharacterRevolvers") as RuntimeAnimatorController;
+        Debug.Log(revolverAnimatorController);
         //player children
         Revolver = GameObject.Find("Revolver");
         Revolvers = GameObject.Find("Revolvers");
 
         //settings revolver 
         gunType = 1;
-        characerSprite.sprite = revolverSprite;
+        characterAnimator.runtimeAnimatorController = revolverAnimatorController;
         //setiings shotgun
 
     }
@@ -73,7 +75,7 @@ public class Gun : MonoBehaviour
 
         if (generalAmmo <= 0) {
             gunType = 1;
-            characerSprite.sprite = revolverSprite;
+            characterAnimator.runtimeAnimatorController = revolverAnimatorController;
         }
         
     }
@@ -86,7 +88,7 @@ public class Gun : MonoBehaviour
             //revolvers
             if (gunType == 2)
             {
-                characerSprite.sprite = revolversSprite;
+                characterAnimator.runtimeAnimatorController = revolversAnimatorController;
                 generalAmmo = revolversAmmo;
             }
         }

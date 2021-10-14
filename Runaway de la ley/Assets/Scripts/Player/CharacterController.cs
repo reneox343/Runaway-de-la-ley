@@ -22,13 +22,14 @@ public class CharacterController : MonoBehaviour
     [HideInInspector]
     public bool isPlayerJumping;
 
+    private Animator playerAnimator;
 
 
     void Start()
     {
         playerDirection = 1;
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
-
+        playerAnimator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -40,7 +41,7 @@ public class CharacterController : MonoBehaviour
 
         setPlayerDirection();
     }
-
+    
     void jump() {
 
         if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rigidBody.velocity.y) < 0.001f)
@@ -51,18 +52,27 @@ public class CharacterController : MonoBehaviour
         }
         if (Mathf.Abs(rigidBody.velocity.y) > 0.001f) isPlayerJumping = true;
         else isPlayerJumping = false;
+        
+
     }
 
     void movement() {
 
+        
         transform.position += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * playerSpeed, 0, 0);
+        playerAnimator.SetFloat("moving", Mathf.Abs( Input.GetAxis("Horizontal") * Time.deltaTime * playerSpeed));
         if (Input.GetAxis("Horizontal") > 0)
         {
             gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
+
         }
         else if (Input.GetAxis("Horizontal") < 0)
         {
             gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        else {
+            playerAnimator.SetFloat("moving",0);
+
         }
 
     }
@@ -93,4 +103,6 @@ public class CharacterController : MonoBehaviour
         }
 
     }
+
+
 }
