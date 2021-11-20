@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - EnemyBullet
+  - Consumables
+  - Bullet
+  - Enemy
+  - Money
   layers:
   - Default
   - TransparentFX
@@ -12,10 +17,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Player
+  - EnemyAttack
+  - PlayerAttack
   - 
   - 
   - 
@@ -44,4 +49,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: HUD
+    uniqueID: 983009867
     locked: 0

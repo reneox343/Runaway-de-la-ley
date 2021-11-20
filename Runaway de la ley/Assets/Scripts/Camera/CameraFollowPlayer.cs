@@ -48,16 +48,19 @@ public class CameraFollowPlayer : MonoBehaviour
         cameraMovemetX *= Time.deltaTime;
         xAcumulada += cameraMovemetX;
 
-        if (characterController.isPlayerJumping)
-        {
-            transform.position = new Vector3(player.transform.position.x + xAcumulada, gameObject.transform.position.y, -cameraPostionZ);
-        }
-        else
-        {
-            transform.position = new Vector3(player.transform.position.x + xAcumulada, player.transform.position.y + cameraOffsetY, -cameraPostionZ);
-        }
+        //if (characterController.isPlayerJumping)
+        //{
+        //    transform.position = new Vector3(player.transform.position.x + xAcumulada, gameObject.transform.position.y, -cameraPostionZ);
+        //}
+        //else
+        //{
+        //    transform.position = new Vector3(player.transform.position.x + xAcumulada, player.transform.position.y + cameraOffsetY, -cameraPostionZ);
+        //}
 
+
+        transform.position = new Vector3(player.transform.position.x + xAcumulada, gameObject.transform.position.y, -cameraPostionZ);
     }
+
 
 
 }
