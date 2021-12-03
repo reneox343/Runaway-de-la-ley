@@ -24,24 +24,55 @@ public class CharacterController : MonoBehaviour
 
     private Animator playerAnimator;
 
+    private CurrentPlayerData currentData;
+
+    private Gun gunScript;
+
+    private bool astiModeUpgrade;
 
     void Start()
     {
+        astiModeUpgrade = false;
         playerDirection = 1;
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         playerAnimator = gameObject.GetComponent<Animator>();
+        currentData = GameObject.Find("Player").GetComponent<CurrentPlayerData>();
+        gunScript = GameObject.Find("Player").GetComponent<Gun>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        astiModeUpgradesCharacterController();
+
         jump();
 
         movement();
 
-        setPlayerDirection();
+        setPlayerDirectionKeyboard();
+
+        setPlayerDirectionController();
+
     }
-    
+
+    void astiModeUpgradesCharacterController() {
+
+        if (currentData.data.astiModeUpgrades[0] && gunScript.astiMode && !astiModeUpgrade)
+        {
+            
+            playerSpeed += currentData.astiModePlayerVelocityUpgrade;
+            astiModeUpgrade = true;
+        }
+        if (currentData.data.astiModeUpgrades[0] && !gunScript.astiMode && astiModeUpgrade)
+        {
+            playerSpeed -= currentData.astiModePlayerVelocityUpgrade;
+            astiModeUpgrade = false;
+
+        }
+
+    }
+
     void jump() {
 
         if (Input.GetAxisRaw("Jump") == 1 && Mathf.Abs(rigidBody.velocity.y) < 0.001f)
@@ -50,6 +81,7 @@ public class CharacterController : MonoBehaviour
             Destroy(Instantiate(smoke, smokeEmitter.transform.position, Quaternion.identity), 1);
 
         }
+
         if (Mathf.Abs(rigidBody.velocity.y) > 0.001f) isPlayerJumping = true;
         else isPlayerJumping = false;
         
@@ -73,12 +105,26 @@ public class CharacterController : MonoBehaviour
             playerAnimator.SetFloat("moving", 0);
 
         }
-
+        //keyboard
         if (Input.GetKey(KeyCode.LeftShift)) {
             playerAnimator.SetFloat("moving", 0);
             return;
+        }        if (Input.GetKey(KeyCode.LeftShift)) {
+            playerAnimator.SetFloat("moving", 0);
+            return;
         }
-
+        //keyboard
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            playerAnimator.SetFloat("moving", 0);
+            return;
+        }
+        //controller
+        if (Input.GetKey("joystick button 5"))
+        {
+            playerAnimator.SetFloat("moving", 0);
+            return;
+        }
         //moves the player to the correc position and rotate the character
         transform.position += new Vector3(Input.GetAxis("Horizontal") * Time.deltaTime * playerSpeed, 0, 0);
         playerAnimator.SetFloat("moving", Mathf.Abs( Input.GetAxis("Horizontal") * Time.deltaTime * playerSpeed));
@@ -86,7 +132,7 @@ public class CharacterController : MonoBehaviour
 
     }
 
-    void setPlayerDirection() {
+    void setPlayerDirectionKeyboard() {
         //setting players direction by movement
         //horizontal
         if (Input.GetAxisRaw("Horizontal") == 1 && Input.GetAxisRaw("Vertical") == 0)
@@ -135,6 +181,62 @@ public class CharacterController : MonoBehaviour
         }
 
     }
+
+    void setPlayerDirectionController()
+    {
+        //setting players direction by movement
+        //horizontal
+        if (Input.GetAxis("Horizontal") > 0 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            playerDirection = 1;
+        }
+        if (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            playerDirection = -1;
+        }
+        //up diagonals
+        if ((Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") > 0))
+        {
+            playerDirection = 2;
+        }
+        if (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") > 0)
+        {
+            playerDirection = -2;
+        }
+        //down diagonals
+        if ((Input.GetAxisRaw("Horizontal") > 0 && Input.GetAxisRaw("Vertical") < 0))
+        {
+            playerDirection = 3;
+        }
+        if (Input.GetAxisRaw("Horizontal") < 0 && Input.GetAxisRaw("Vertical") < 0)
+        {
+            playerDirection = -3;
+        }
+        //correcting players direction
+        if (playerDirection == 2 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            playerDirection = 1;
+        }
+
+        if (playerDirection == -2 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            playerDirection = -1;
+        }
+
+        if (playerDirection == 3 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            playerDirection = 1;
+        }
+
+        if (playerDirection == -3 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            playerDirection = -1;
+        }
+
+    }
+
+
+
 
 
 }

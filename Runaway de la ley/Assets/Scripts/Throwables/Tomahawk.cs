@@ -13,24 +13,16 @@ public class Tomahawk : MonoBehaviour
     public int rotationVelocity;
     //Rotation direction 
     private bool rotation;
+    //delete
+    public float deleteTimer;
     //character script
     private CharacterController playerScript;
-    //AstiMode
-    private Gun gunscript;
+
 
     private void Start()
     {
         rotationVelocity *= 100;
-        //is used to see the direction in witch the tomahawk shot be launched
         playerScript = GameObject.Find("Player").GetComponent<CharacterController>();
-        ////it is used to see if the asti mode is active
-        //gunscript = GameObject.Find("Player").GetComponent<Gun>();
-        ////checks if asti mode is enabled
-        //if (gunscript.astiMode)
-        //{
-        //    tomahawkImpulseX += tomahawkImpulseX * gunscript.astiModeMultiplayer;
-        //    tomahawkImpulseY += tomahawkImpulseY * gunscript.astiModeMultiplayer;
-        //}
 
         if (playerScript.playerDirection > 0)
         {
@@ -56,12 +48,12 @@ public class Tomahawk : MonoBehaviour
                 gameObject.transform.eulerAngles += new Vector3(0, 0, rotationVelocity * Time.deltaTime);
                 break;
         }
-
+        deleteTimer -= Time.deltaTime;
+        if (deleteTimer <= 0) 
+        {
+            Destroy(gameObject);
+        }
     }
 
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
 }
 

@@ -98,9 +98,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542d9c8fb32746746901dc80ae8fa460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeX: 3
+  rangeX: 1.5
   bulletSpeed: 10
   ramdomDirectionVariation: 10
+  isPellet: 0
+  pelletsEnabled: 0
+  amountOfPellets: 3
+  pellets: {fileID: 1113484439164526471, guid: a9f9763f762d2cd46baa75bd58280fb9, type: 3}
+  direction: 0
 --- !u!114 &5158702988718073972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,8 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b428d9088dbc744acc288765f8cd7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletDamage: 2.5
+  BulletDamage: 3.5
   destroyOnImpact: 1
+  destroyOnInvisible: 1
 --- !u!58 &403361226744298378
 CircleCollider2D:
   m_ObjectHideFlags: 0

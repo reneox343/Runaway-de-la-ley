@@ -16,19 +16,25 @@ public class Eagle : MonoBehaviour
     //direction in witch the bullet will travel
     Vector3 direction;
 
-
+    //attack
+    private bool attack;
 
     void Start()
     {
+        attack = false;
         player = GameObject.Find("Player");
-        //finds the direction in with te arrow must be shoot to hit the player
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (attack) followPlayer();
+
+    }
+
+
+    private void followPlayer() {
         //makes the eagle follow the players direction
         direction = player.transform.position - gameObject.transform.position;
         distanceX = Mathf.Abs(direction.x);
@@ -51,7 +57,11 @@ public class Eagle : MonoBehaviour
             gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
         }
 
+    }
 
+    private void OnBecameVisible()
+    {
+        attack = true;
     }
 
 

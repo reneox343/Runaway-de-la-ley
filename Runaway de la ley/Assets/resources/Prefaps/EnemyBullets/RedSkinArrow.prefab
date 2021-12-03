@@ -100,7 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 2.5
   deleteTimer: 7.5
-  offset: 180
 --- !u!50 &4020613590115714562
 Rigidbody2D:
   serializedVersion: 4
@@ -161,3 +160,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletEnemyDamage: 1
+  destroyOnColision: 1

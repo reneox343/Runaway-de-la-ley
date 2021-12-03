@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7042511376470078392}
   - component: {fileID: 7042511376470078395}
   - component: {fileID: 7042511376470078393}
+  - component: {fileID: 7261301521937955082}
   m_Layer: 0
   m_Name: Blood Eagle
   m_TagString: EnemyBullet
@@ -72,11 +73,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ac292c3ef5d2eec4b8ef3bc2f934593e, type: 3}
-  m_Color: {r: 1, g: 0.07510999, b: 0, a: 1}
+  m_SortingLayerID: 983009867
+  m_SortingLayer: 1
+  m_SortingOrder: 10
+  m_Sprite: {fileID: -301407033376726615, guid: 2e152bd6c041f9e429df36c346d7a1ee, type: 3}
+  m_Color: {r: 1, g: 0.07075471, b: 0.07075471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -113,9 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5009256798894434eb9a484566ef1ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 1
-  minDrop: 1
-  maxDrop: 3
+  enemyHealth: 8
+  minDrop: 25
+  maxDrop: 25
 --- !u!114 &7042511376470078395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletEnemyDamage: 0
+  destroyOnColision: 0
 --- !u!61 &7042511376470078393
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -155,3 +157,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.48}
   m_EdgeRadius: 0
+--- !u!95 &7261301521937955082
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7042511376470078397}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b7fd633cc578be04c9cc3d294182e89e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

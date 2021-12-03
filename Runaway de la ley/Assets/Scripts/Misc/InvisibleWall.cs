@@ -6,9 +6,10 @@ public class InvisibleWall : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool makeInvisible;
-    void Start()
+
+    private void Awake()
     {
-        if(makeInvisible) Destroy(gameObject.GetComponent<SpriteRenderer>());
+        if (makeInvisible) Destroy(gameObject.GetComponent<SpriteRenderer>());
     }
 
 }

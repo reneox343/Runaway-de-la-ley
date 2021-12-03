@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Enemy
   - Money
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Player
   - EnemyAttack
   - PlayerAttack
-  - 
-  - 
+  - Platform
+  - Consumables
   - 
   - 
   - 

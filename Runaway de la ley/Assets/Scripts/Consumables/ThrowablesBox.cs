@@ -9,7 +9,7 @@ public class ThrowablesBox : MonoBehaviour
     public int throwabletype;
     void Start()
     {
-        throwabletype = 1;
+        throwabletype = Random.Range(1, 3);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

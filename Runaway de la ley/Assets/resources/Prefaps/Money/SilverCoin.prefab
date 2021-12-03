@@ -238,4 +238,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 1
-  despawnTimer: 5
+  despawnTimer: 7
+  soundEfect: {fileID: 8300000, guid: b68cf18f525600541a759df80f223e0e, type: 3}

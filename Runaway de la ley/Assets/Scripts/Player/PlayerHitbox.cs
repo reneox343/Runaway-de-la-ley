@@ -9,24 +9,117 @@ public class PlayerHitbox : MonoBehaviour
     [HideInInspector]
     public int playerHealth = 3;
     [HideInInspector]
-    public int playerMoney =0;
+    public int playerMoney;
+    //invensivility
+    public float invencibilityTimer;
+    public float invincibilityEffectTimer;
+    private float invencibilityGlobalTimer;
+    //player sprite renderer
+    private SpriteRenderer playerSpriteRenderer;
+    //health bar
     private HealthBar healthBarScript;
-
-
+    //audio
+    private AudioSource playerAudioSource;
+    //gun script
+    private Gun gunScript;
+    //current data
+    private CurrentPlayerData currentData;
+    //invensibility flag
+    private bool invencibility;
+    //astimode flag
+    private bool astiModeUpgrade;
+    //player curret data
     // Update is called once per frame
     private void Start()
     {
+        
+
+        astiModeUpgrade = false;
+        invencibility = false;
+        playerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         healthBarScript = GameObject.Find("HealthBar").GetComponent<HealthBar>();
-        //playerMoney = 0;
+        gunScript = gameObject.GetComponent<Gun>();
+        currentData =gameObject.GetComponent<CurrentPlayerData>();
+        playerMoney = currentData.data.money;
+        playerAudioSource = gameObject.GetComponent<AudioSource>();
+    }   
+
+    private void astiModeUpgradesPlayerHitbox()
+    {
+        if (currentData.data.astiModeUpgrades[3] && gunScript.astiMode && !astiModeUpgrade)
+        {
+            invencibilityGlobalTimer = currentData.astiModeInvencibilityUpgrade;
+            InvokeRepeating("invincibilityEffectCaller", 0, invincibilityEffectTimer * 2);
+            invencibility = true;
+            astiModeUpgrade = true;
+        }
+
+        if (currentData.data.astiModeUpgrades[3] && !gunScript.astiMode && astiModeUpgrade)
+        {
+            astiModeUpgrade = false;
+            invencibility = false;
+        }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void Update()
+    {
+        calculateTimers();
+
+        astiModeUpgradesPlayerHitbox();
+
+    }
+
+
+    void calculateTimers()
     {
 
-        if (collision.gameObject.tag == "EnemyBullet")
+        if (invencibilityGlobalTimer > 0)
         {
+            invencibilityGlobalTimer -= Time.deltaTime;
+           
+        }
+        else
+        {
+            invencibility = false;
+            CancelInvoke();
+        }
+    }
+
+    void invincibilityEffectCaller() {
+        StartCoroutine(invincibilityEffect());
+    }
+    IEnumerator invincibilityEffect()
+    {
+
+        playerSpriteRenderer.enabled = false;
+
+        yield return new WaitForSeconds(invincibilityEffectTimer);
+
+
+        playerSpriteRenderer.enabled = true;
+    }    
+    IEnumerator invincibilityEffectAstiModeUpgrade()
+    {
+
+        playerSpriteRenderer.enabled = false;
+
+        yield return new WaitForSeconds(invincibilityEffectTimer);
+
+
+        playerSpriteRenderer.enabled = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "EnemyBullet" && invencibilityGlobalTimer <= 0)
+        {
+            if (invencibility) return;
             playerHealth -= 1;
             healthBarScript.showDamage();
             if (playerHealth <= 0) Destroy(gameObject);
+            InvokeRepeating("invincibilityEffectCaller", 0, invincibilityEffectTimer * 2);
+            invencibility = true;
+            invencibilityGlobalTimer = invencibilityTimer;
         }
 
         if (playerHealth <= 0) {
@@ -38,8 +131,28 @@ public class PlayerHitbox : MonoBehaviour
     {
         if (collision.gameObject.tag == "Money")
         {
-            playerMoney += collision.gameObject.GetComponent<MoneyHitbox>().value;
+            MoneyHitbox moneyHitboxScript = collision.gameObject.GetComponent<MoneyHitbox>();
+            playerMoney += moneyHitboxScript.value;
+            playerAudioSource.PlayOneShot(moneyHitboxScript.soundEfect);
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "EnemyBullet" && invencibilityGlobalTimer <= 0)
+        {
+            if (invencibility) return;
+            playerHealth -= 1;
+            healthBarScript.showDamage();
+            if (playerHealth <= 0) Destroy(gameObject);
+            InvokeRepeating("invincibilityEffectCaller", 0, invincibilityEffectTimer * 2);
+            invencibility = true;
+            invencibilityGlobalTimer = invencibilityTimer;
+        }
+
+
+        if (playerHealth <= 0)
+        {
+
+            SceneManager.LoadScene(0);
         }
     }
 

@@ -168,8 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tomahawkImpulseX: 2.5
-  tomahawkImpulseY: 4
+  tomahawkImpulseY: 5
   rotationVelocity: 5
+  deleteTimer: 5
 --- !u!114 &-3603812524363784856
 MonoBehaviour:
   m_ObjectHideFlags: 0

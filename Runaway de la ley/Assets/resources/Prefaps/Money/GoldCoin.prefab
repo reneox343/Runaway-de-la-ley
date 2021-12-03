@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 10
-  despawnTimer: 5
+  despawnTimer: 7
+  soundEfect: {fileID: 8300000, guid: ef5b4fd5297a43546b1a6be98a192aab, type: 3}
 --- !u!1 &2559755130200619360
 GameObject:
   m_ObjectHideFlags: 0

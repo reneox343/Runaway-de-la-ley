@@ -2,21 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayTextMeshPro : MonoBehaviour
 {
 
-	//public Button Play;
+    public Button newGameButton;
 
-	//void Start()
-	//{
-	//	Button btn = Play.GetComponent<Button>();
-	//	btn.onClick.AddListener(exit);
-	//}
+    void Start()
+    {
+        newGameButton.onClick.AddListener(newGame);
+    }
 
-	//void exit()
-	//{
-	//	Application.Quit();
-	//}
+    void newGame()
+    {
+        SaveSystemDataPlayer.savePlayerData(3,0,new bool[4]{ false, false, false,false }, new bool[4] { false, false, false, false }, new bool[4] { false, false, false, false }, new bool[4] { false, false, false, false });
+        SceneManager.LoadScene(3);
+    }
 
 }

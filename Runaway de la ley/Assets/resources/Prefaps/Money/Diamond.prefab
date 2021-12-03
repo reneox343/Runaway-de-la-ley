@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.3
   m_Color: {r: 0, g: 0.9644842, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
@@ -238,4 +238,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 50
-  despawnTimer: 5
+  despawnTimer: 7
+  soundEfect: {fileID: 8300000, guid: 3fa2ca7f1e9497f4eb75f1ed32c980cf, type: 3}

@@ -7,6 +7,7 @@ public class MoneyHitbox : MonoBehaviour
 {
     public int value;
     public float despawnTimer;
+    public AudioClip soundEfect;
     private float globalTimer;
     private float flashTimer;
     private SpriteRenderer spriteRenderer;

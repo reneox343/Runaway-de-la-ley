@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     //Defines the range of the bullet
     [SerializeField]
-    private float rangeX;
+    public float rangeX;
     //Defines how fast the bullet will travel
     [SerializeField]
     private float bulletSpeed;
@@ -24,6 +24,14 @@ public class Bullet : MonoBehaviour
     public float ramdomDirectionVariation;
     //AstiMode
     private Gun gunscript;
+    [Header("Pellets")]
+    //pellets
+    public bool isPellet;
+    public bool pelletsEnabled;
+    public int amountOfPellets;
+    public GameObject pellets;
+    [SerializeField]
+    public int direction;
     void Start()
     {
         //give the bullet a random direction 
@@ -32,9 +40,13 @@ public class Bullet : MonoBehaviour
         OriginalX = gameObject.transform.position.x;
         OriginalY = gameObject.transform.position.y;
         //Destroy(gameObject,bulletTimer);
+        
         playerScript = GameObject.Find("Player").GetComponent<CharacterController>();
+
+        if(!isPellet) direction = playerScript.playerDirection;
+
         //finds the direction the character is looking to fire the bullet
-        switch (playerScript.playerDirection)
+        switch (direction)
         {
             case 1:
                 bulletDirection = 1;
@@ -70,7 +82,7 @@ public class Bullet : MonoBehaviour
             rangeX += rangeX * gunscript.astiModeMultiplayer;
         }
 
-        
+
     }
 
     // Update is called once per frame
@@ -85,29 +97,63 @@ public class Bullet : MonoBehaviour
         {
             case 1:
                 gameObject.transform.position += new Vector3(bulletSpeed, randomDirection, 0) * Time.deltaTime;
-                if (gameObject.transform.position.x >= OriginalX + rangeX) Destroy(gameObject);
+                if (gameObject.transform.position.x >= OriginalX + rangeX)
+                {
+                    createPellet();
+                    Destroy(gameObject);
+                }
+                    
                 break;
             case -1:
                 gameObject.transform.position -= new Vector3(bulletSpeed, randomDirection, 0) * Time.deltaTime;
-                if (gameObject.transform.position.x <= OriginalX - rangeX) Destroy(gameObject);
+                if (gameObject.transform.position.x <= OriginalX - rangeX) 
+                {
+                    createPellet();
+                    Destroy(gameObject);
+                } 
                 break;
             case 2:
                 gameObject.transform.position += new Vector3(bulletSpeed, bulletSpeed +randomDirection, 0) * (0.5f) * Time.deltaTime;
-                if ((gameObject.transform.position.x >= OriginalX + (rangeX * 0.5)) && (gameObject.transform.position.y >= OriginalY + (rangeX * 0.5))) Destroy(gameObject);
+                if ((gameObject.transform.position.x >= OriginalX + (rangeX * 0.5)) && (gameObject.transform.position.y >= OriginalY + (rangeX * 0.5))) 
+                {
+                    createPellet();
+                    Destroy(gameObject);
+                } 
                 break;
             case -2:
                 gameObject.transform.position += new Vector3(-bulletSpeed, bulletSpeed +randomDirection, 0) * (0.5f) * Time.deltaTime;
-                if ((gameObject.transform.position.x <= OriginalX - (rangeX * 0.5)) && (gameObject.transform.position.y >= OriginalY + (rangeX * 0.5))) Destroy(gameObject);
+                if ((gameObject.transform.position.x <= OriginalX - (rangeX * 0.5)) && (gameObject.transform.position.y >= OriginalY + (rangeX * 0.5))) 
+                {
+                    createPellet();
+                    Destroy(gameObject);
+                } 
                 break;            
             case 3:
-                gameObject.transform.position += new Vector3(bulletSpeed, -bulletSpeed +randomDirection, 0) * (0.5f) * Time.deltaTime;
-                if ((gameObject.transform.position.x >= OriginalX + (rangeX * 0.5)) && (gameObject.transform.position.y >= OriginalY + (rangeX * 0.5))) Destroy(gameObject);
+                gameObject.transform.position += new Vector3(bulletSpeed, -bulletSpeed + randomDirection, 0) * (0.5f) * Time.deltaTime;
+                if ((gameObject.transform.position.x >= OriginalX + (rangeX * 0.5)) && (gameObject.transform.position.y >= OriginalY + (rangeX * 0.5))) 
+                {
+                    createPellet();
+                    Destroy(gameObject);
+                } 
                 break;
             case -3:
                 gameObject.transform.position += new Vector3(-bulletSpeed, -bulletSpeed +randomDirection, 0) * (0.5f) * Time.deltaTime;
-                if ((gameObject.transform.position.x <= OriginalX - (rangeX * 0.5)) && (gameObject.transform.position.y >= OriginalY + (rangeX * 0.5))) Destroy(gameObject);
+                if ((gameObject.transform.position.x <= OriginalX - (rangeX * 0.5)) && (gameObject.transform.position.y >= OriginalY + (rangeX * 0.5))) 
+                {
+                    createPellet();
+                    Destroy(gameObject);
+                } 
                 break;
         }
+    }
+    void createPellet() {
+        for (int i = 0; i < amountOfPellets && pelletsEnabled; i++)
+        {
+            GameObject pellet = Instantiate(pellets, gameObject.transform.position, Quaternion.identity);
+            pellet.GetComponent<Bullet>().isPellet = true;
+            pellet.GetComponent<Bullet>().direction = bulletDirection;
+        }
+
     }
 
 }
